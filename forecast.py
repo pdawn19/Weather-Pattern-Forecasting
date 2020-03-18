@@ -8,10 +8,10 @@ if __name__ == '__main__':
     # Load Data
     data = pd.read_csv("weather-data/humidity.csv", header=None, low_memory=False)
     humidity = data.iloc[25:, 1].astype(float)
-    # pressure = pd.read_csv("weather-data/pressure.csv", header=None, low_memory=False)
-    # pressure = pressure.iloc[2:, 1].astype(float)
-    # temp = pd.read_csv("weather-data/temperature.csv", header=None, low_memory=False)
-    # temp = temp.iloc[2:, 1].astype(float)
+    pressure = pd.read_csv("weather-data/pressure.csv", header=None, low_memory=False)
+    pressure = pressure.iloc[2:, 1].astype(float)
+    temp = pd.read_csv("weather-data/temperature.csv", header=None, low_memory=False)
+    temp = temp.iloc[2:, 1].astype(float)
     datetime = data.iloc[25:, 0]
     date, time = [], []
     for item in datetime:
@@ -21,8 +21,8 @@ if __name__ == '__main__':
 
     # Data Pre-processing - Fill Missing Values
     humidity = humidity.fillna(method='ffill', axis=0)
-    # pressure = pressure.fillna(method='ffill', axis=0)
-    # temp = temp.fillna(method='ffill', axis=0)
+    pressure = pressure.fillna(method='ffill', axis=0)
+    temp = temp.fillna(method='ffill', axis=0)
 
     # Typecasting and Data Splitting
     humidity = np.asarray(humidity)
