@@ -1,3 +1,5 @@
+# Libraries:
+
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -7,21 +9,23 @@ import matplotlib.animation as animation
 
 overdoses = pd.read_excel('overdose_data_1999-2015.xls',sheet_name='Online',skiprows =6)
 
+# Helper Functions
 def get_data(table,rownum,title):
     data = pd.DataFrame(table.loc[rownum][2:]).astype(float)
     data.columns = {title}
     return data
 
-#matplotlib notebook
+'''matplotlib notebook'''
+
 title = 'Value'
 d = get_data(overdoses,18,title)
 x = np.array(d.index)
-# y = np.array(d['Heroin Overdoses'])
-# print(y)
+y = np.array(d['Heroin Overdoses'])
+print(y)
 y = [ 1960.,  3842.,  2779.,  2089.,  3080.,  1878.,  5009.,  2088.,  1399.,  3041.,  3878.,  3036.,  4397.,  5925.,  6257., 9574., 7289.]
 overdose = pd.DataFrame(y,x)
-#XN,YN = augment(x,y,10)
-#augmented = pd.DataFrame(YN,XN)
+XN,YN = augment(x,y,10)
+augmented = pd.DataFrame(YN,XN)
 overdose.columns = {title}
 
 Writer = animation.writers['ffmpeg']
@@ -34,6 +38,8 @@ plt.xlabel('Year',fontsize=20)
 plt.ylabel(title,fontsize=20)
 plt.title('Time Series Data',fontsize=20)
 
+'''Create a lineplot for visualization'''
+
 def animate(i):
     data = overdose.iloc[:int(i+1)] #select data range
     p = sns.lineplot(x=data.index, y=data[title], data=data, color="r")
@@ -43,7 +49,7 @@ def animate(i):
 ani = matplotlib.animation.FuncAnimation(fig, animate, frames=17, repeat=True)
 ani.save("time.gif",dpi=80, writer='imagemagick')
 
-
+''' gaussian modeling'''
 def augment(xold,yold,numsteps):
     xnew = []
     ynew = []
