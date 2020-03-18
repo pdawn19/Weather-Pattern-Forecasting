@@ -9,8 +9,9 @@ from statsmodels.graphics.tsaplots import plot_acf
 import seaborn as sns
 import numpy as np
 
-#ARIMA/ARMA returns a 2D array as predictions 
-#while SARIMA returns mean predictions
+"""ARIMA/ARMA returns a 2D array as predictions 
+while SARIMA returns mean predictions"""
+
 def model_arima(train_data, test_data):
 
     # Basic ARIMA Model fitting
@@ -19,9 +20,9 @@ def model_arima(train_data, test_data):
     print(model_fit.summary().tables[1])
 
     # works for v0.6.1 only
-    # model_fit.plot_diagnostics(figsize=(16, 8))
-    # plt.tight_layout()
-    # plt.show()
+    model_fit.plot_diagnostics(figsize=(16, 8))
+    plt.tight_layout()
+    plt.show()
 
     # plot residual errors
     residuals = model_fit.resid
@@ -41,19 +42,16 @@ def model_arima(train_data, test_data):
     # Forecast
     step = 10
     predictions = model_fit.forecast(steps=step)
-    # print(predictions, test_data[0:step])
     plt.plot(predictions[0], color='r', label='Mean Prediction')
-    # plt.plot(predictions[1], color='g')
     plt.plot(predictions[2], color='b', label='Variance')
     plt.plot(test_data[0:step], color='k', label='Actual')
     plt.legend(loc='best')
     plt.title('ARIMA predictions')
     plt.show()
-#    print(np.shape(predictions))
 
     print('ARIMA RMSE: ', mean_squared_error(predictions[0], test_data[0:step]))
     
- 
+"""Model ARMA"""
 def model_arma(train_data,test_data):
     model = ARMA(train_data, order= (1,1))
     model_fit = model.fit(disp=-1)
@@ -61,10 +59,10 @@ def model_arma(train_data,test_data):
     # Forecast
     step = 10
     predictions = model_fit.forecast(steps=step)
-#    print(np.shape(predictions))
+    print(np.shape(predictions))
     print('ARMA RMSE: ', mean_squared_error(predictions[0], test_data[0:step]))
 
-
+"""Model SARIMA"""
 def model_sarima(train_data,test_data):
     model = SARIMAX(train_data, order = (1,1,1), seasonal_order = (1,1,1,1))
     model_fit = model.fit(disp=-1)
@@ -75,7 +73,7 @@ def model_sarima(train_data,test_data):
     print('SARIMA RMSE: ', mean_squared_error(predictions, test_data[0:step]))
     print(np.shape(predictions))
     
-    
+ """MODEL SARIMAX"""  
 def model_sarimax(train_data,test_data,train_data1,test_data1):
     model = SARIMAX(train_data1, exog = train_data, order = (1,1,1), seasonal_order = (1,1,1,1))
     model_fit = model.fit(disp=-1)
@@ -85,7 +83,8 @@ def model_sarimax(train_data,test_data,train_data1,test_data1):
     predictions = model_fit.forecast(steps=step, exog = test_data[0:step].reshape((step,1)))
     print('SARIMAX RMSE: ', mean_squared_error(predictions, test_data1[0:step]))
     print(np.shape(predictions)) 
-    
+ 
+"""MODEL VAR"""
 def model_var(train_data,test_data,train_data1,test_data1):
     x = train_data1.reshape((372,1))
     x1 = train_data.reshape((372,1))
@@ -98,6 +97,7 @@ def model_var(train_data,test_data,train_data1,test_data1):
     predictions = model_fit.forecast(model_fit.y, steps=10)
     print('VAR RMSE: ', mean_squared_error(predictions[:,0], test_data1[0:10]))
     
+ """MODEL VARMAX"""  
 def model_varmax(train_data,test_data,train_data1,test_data1):
     x = train_data1.reshape((372,1))
     x1 = train_data.reshape((372,1))
