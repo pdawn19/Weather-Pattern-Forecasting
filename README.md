@@ -5,10 +5,15 @@ BigDataWeatherAnalysis using Apache Spark
 
 This project was implemented using Python 3.6 and requires the folllowing libraries to be installed as they're not found on the core Python package.
 
-pyspark
-statsmodels
-pandas
-numpy
-matplotlib
+1.pyspark
 
-The Time Series Analysis was performed in WeatherTimeSeriesAnalysis.py. The analysis was performed for the forecast of temperature. The dataset contains hourly data. It was resampled for daily and monthly forecasts and the mean of the respective day/month was used for the resampled data. The time sries analysis was perfomed using Autoregressive Integrated Moving Averages(ARIMA). The predictions and forecasts were performed for both daily and monthly samples.
+2.statsmodels
+
+3.pandas
+
+4.numpy
+
+5.matplotlib
+
+The Time Series Analysis was performed in WeatherTimeSeriesAnalysis.py. 
+The analysis was performed for the forecast of temperature. The dataset contains hourly data. It was resampled for daily and monthly forecasts and the mean of the respective day/month was used for the resampled data. The time sries analysis was perfomed using Autoregressive Integrated Moving Averages(ARIMA),ARMA, SARIMAX, VARMAX. The predictions and forecasts were performed for both daily and monthly samples.
